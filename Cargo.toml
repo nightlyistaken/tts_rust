@@ -4,6 +4,7 @@ version = "0.1.0"
 edition = "2018"
 description = "Simple & easy text-to-speech module for creating bots and much more."
 license = "MIT"
+readme = "README.md"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 

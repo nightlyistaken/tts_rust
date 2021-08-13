@@ -21,8 +21,16 @@ pub fn text_speech(input: &str) {
         fs::remove_file("./audio.mp3").unwrap();
     }
 }
-
+/// if you want to test the module, use this!:smile:
+pub fn test_speech(){
+    save_to_file("This is a test!", "test.mp3");
+    play_mp3("test.mp3");
+    if Path::new("./test.mp3").exists() {
+        fs::remove_file("./test.mp3").unwrap();
+    }
+}
 #[test]
 fn test1() {
     text_speech("Hi");
+    test_speech();
 }

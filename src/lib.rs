@@ -1,3 +1,9 @@
+//! Very Simple Module for text to speech
+//! Example:
+//! text_speech("Hello, World!");
+//! See the Source code here :
+//! https://github.com/dhairy-online/tts-rust-mod
+
 use gtts::save_to_file;
 use std::fs;
 use std::io::BufReader;
@@ -31,7 +37,7 @@ pub fn test_a_speech(){
     }
 }
 
-
+/// Speak and display text at he same time: 
 pub fn text_speech_text(input: &str){
     text_speech(&input);
     println!("{}", input);  

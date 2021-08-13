@@ -19,9 +19,9 @@ Add this to your cargo.toml file:
 
 ```toml
  # [dependencies]
-   tts_rust = "0.1.0"
+   tts_rust = "LATEST_VERSION"
 ```
-
+Replace LATEST_VERSION with the newest version of [tts_rust](https://crates.io/crates/tts_rust)
 #### main.rs
 
 ```rust

@@ -20,14 +20,16 @@
 Add this to your cargo.toml file:
 
 ```toml
- # [dependencies]
    tts_rust = "0.2.0"
 ```
 
 #### main.rs
 
 ```rust
+// use
 use tts_rust::text_speech;
+use tts_rust::text_speech_text;
+use tts_rust::test_a_speech;
 
 fn main() {
    // Anything inside the double quotes (" ") will be spoken out

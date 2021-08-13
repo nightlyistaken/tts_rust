@@ -21,16 +21,29 @@ pub fn text_speech(input: &str) {
         fs::remove_file("./audio.mp3").unwrap();
     }
 }
-/// if you want to test the module, use this!:smile:
-pub fn test_speech(){
-    save_to_file("This is a test!", "test.mp3");
+
+/// if you want to test the module, use this! :smile:
+pub fn test_a_speech(){
+    save_to_file("This is a test, good job!", "test.mp3");
     play_mp3("test.mp3");
     if Path::new("./test.mp3").exists() {
         fs::remove_file("./test.mp3").unwrap();
     }
 }
+
+
+pub fn text_speech_text(input: &str){
+    text_speech(&input);
+    println!("{}", input);  
+}
+
+
 #[test]
-fn test1() {
-    text_speech("Hi");
-    test_speech();
+fn test() {
+    // TTS
+     text_speech("Hi");
+    // TTS Test Speech
+     test_a_speech();
+    // TTS with print macro
+     text_speech_text("hello, world!");
 }

@@ -1,6 +1,6 @@
 [package]
 name = "tts_rust"
-version = "0.1.3"
+version = "0.1.4"
 edition = "2018"
 description = "Simple & easy text-to-speech module for creating bots and much more."
 license = "MIT"

@@ -2,12 +2,6 @@
 
 #### Really Simple Text to Speech module for rust
 
-#### Can be used for bots, websites etc.
-
-### Made with
-
-![rust](https://img.shields.io/badge/Rust-black?style=for-the-badge&logo=rust&logoColor=#E57324)
-
 ## Module available at -
 
 - [crates.io](https://crates.io/crates/tts_rust)
@@ -43,8 +37,8 @@ fn main() {
 
 ```
 
-Thank you! :smile:
-
-### This repo is licensed under:
+### License
 
 - MIT
+
+Thank you!

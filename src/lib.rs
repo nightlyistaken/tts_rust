@@ -30,7 +30,7 @@ pub fn text_speech(input: &str) {
 
 /// if you want to test the module, use this! :smile:
 pub fn test_a_speech(){
-    save_to_file("This is a test, good job!", "test.mp3");
+    save_to_file("G r r r r r r r r r r r r, haha i scared you!", "test.mp3");
     play_mp3("test.mp3");
     if Path::new("./test.mp3").exists() {
         fs::remove_file("./test.mp3").unwrap();

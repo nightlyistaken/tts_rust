@@ -12,7 +12,7 @@ Really Simple Text to Speech module for rust
 Add this to your cargo.toml file:
 
 ```toml
-   tts_rust = "0.2.0"
+   tts_rust = "0.3.0"
 ```
 
 #### main.rs

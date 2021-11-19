@@ -3,7 +3,7 @@
 Really Simple Text to Speech module for rust
 
 - [crates.io](https://crates.io/crates/tts_rust)
-- [docs.rs](https://docs.rs/tts_rust/0.1.0)
+- [docs.rs](https://docs.rs/tts_rust/)
 
 ## Example
 
@@ -18,10 +18,12 @@ Add this to your cargo.toml file:
 #### main.rs
 
 ```rust
-use tts_rust::text_speech;
-
 fn main() {
-    text_speech("Hello, World!");
+    let english_speaker = tts_rust::TTS {
+        volume: 1.5,
+        language: "mr".to_string(),
+    };
+    english_speaker.speak("Hello There!");
 }
 ```
 

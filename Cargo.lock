@@ -245,16 +245,6 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "9b919933a397b79c37e33b77bb2aa3dc8eb6e165ad809e58ff75bc7db2e34574"
 
 [[package]]
-name = "gtts"
-version = "0.1.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "f785ab31571bf2f9ace5388f5754a144e4ff89130baf939fdda94993129eed7e"
-dependencies = [
- "minreq",
- "percent-encoding",
-]
-
-[[package]]
 name = "hound"
 version = "3.4.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -859,9 +849,10 @@ dependencies = [
 
 [[package]]
 name = "tts_rust"
-version = "0.2.0"
+version = "0.3.0"
 dependencies = [
- "gtts",
+ "minreq",
+ "percent-encoding",
  "rodio",
 ]
 

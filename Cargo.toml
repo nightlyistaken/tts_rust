@@ -1,6 +1,6 @@
 [package]
 name = "tts_rust"
-version = "0.3.0"
+version = "0.3.1"
 edition = "2018"
 description = "Simple & easy text-to-speech module for your needs."
 license = "MIT"
@@ -11,6 +11,6 @@ keywords = ["tts", "text_to_speech", "gTTS"]
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-minreq = {version="2.0.3", features=["https"]}
+minreq = { version="2.0.3", features=["https"] }
 percent-encoding = "2.1.0"
 rodio = "0.14.0"

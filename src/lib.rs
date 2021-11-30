@@ -1,26 +1,40 @@
-//! ## Very Simple Module for text to speech
+//! # Very Simple Module for gTTS
 //! Example:
-//! ```rs
-//! let narrator = TTS { volume: 1.5 };
-//! narrator.speak("I'm Speaking!");
+//! ```rust
+//! let narrator = GTTSClient {
+//!      volume: 1.0,
+//!     language: "en",
+//! };
+//! narrator.speak("Hello!");
 //! ```
-//!
+
 use minreq::get;
-use percent_encoding::{utf8_percent_encode, AsciiSet, CONTROLS};
+use percent_encoding::utf8_percent_encode;
+use percent_encoding::AsciiSet;
+use percent_encoding::CONTROLS;
 use std::fs;
 use std::fs::File;
 use std::io::prelude::*;
 use std::io::BufReader;
 use std::path::Path;
-pub struct TTS {
+
+pub struct GTTSClient<'a> {
+    /// The volume of the gTTS client
+    ///
+    /// recommended value is 1.0
     pub volume: f32,
     /// Use Language Codes according to ISO
-    pub language: String,
+    ///
+    /// example: en(english), ja(japanese), hi(hindi)
+    pub language: &'a str,
 }
-impl TTS {
+
+const ENCODE_FRAGMENT: &AsciiSet = &CONTROLS.add(b' ').add(b'"').add(b'<').add(b'>').add(b'`');
+
+impl<'a> GTTSClient<'a> {
     fn save_to_file(&self, text: &str, filename: &str) -> bool {
         let len = text.len();
-        let text = utf8_percent_encode(text, FRAGMENT).to_string();
+        let text = utf8_percent_encode(text, ENCODE_FRAGMENT).to_string();
 
         if let Ok(rep) = get(format!("https://translate.google.fr/translate_tts?ie=UTF-8&q={}&tl={}&total=1&idx=0&textlen={}&tl={}&client=tw-ob", text, self.language, len, self.language)).send() {
         if let Ok(mut file) = File::create(filename) {
@@ -32,7 +46,6 @@ impl TTS {
             }
         }
     }
-
         false
     }
     fn play_mp3(&self, mp3: &str) {
@@ -43,6 +56,7 @@ impl TTS {
         sink.append(rodio::Decoder::new(BufReader::new(file)).unwrap());
         sink.sleep_until_end();
     }
+    /// Speak the input according to the volume and language
     pub fn speak(&self, input: &str) {
         self.save_to_file(input, "audio.mp3");
         self.play_mp3("audio.mp3");
@@ -50,7 +64,10 @@ impl TTS {
             fs::remove_file("./audio.mp3").unwrap();
         }
     }
-
+    pub fn display_and_speak(&self, input: &str) {
+        self.speak(input);
+        println!("{}", input);
+    }
     /// Fastest way to check if TTS works
     pub fn test(&self) {
         self.save_to_file("Hello!", "audio.mp3");
@@ -61,19 +78,17 @@ impl TTS {
     }
 }
 
-const FRAGMENT: &AsciiSet = &CONTROLS.add(b' ').add(b'"').add(b'<').add(b'>').add(b'`');
-
 #[test]
 fn check_function_1() {
-    let mut narrator = TTS {
+    let mut narrator: GTTSClient = GTTSClient {
         volume: 1.0,
-        language: "en".to_string(),
+        language: "en",
     };
     narrator.speak("Starting test?");
     let ms = std::time::Duration::from_millis(1000);
     for _x in 1..9 {
         narrator.volume += 1.0;
-        let to_speak = String::from("Loop ") + &narrator.volume.to_string();
+        let to_speak: String = String::from("Loop ") + &narrator.volume.to_string();
         narrator.speak(&to_speak);
         std::thread::sleep(ms);
     }
@@ -81,9 +96,10 @@ fn check_function_1() {
 
 #[test]
 fn check_function_2() {
-    let tester = TTS {
+    let tester: GTTSClient = GTTSClient {
         volume: 1.5,
-        language: "mr".to_string(),
+        language: "ja",
     };
-    tester.speak("e");
+    tester.test();
+    tester.display_and_speak("displaying and speaking boi")
 }

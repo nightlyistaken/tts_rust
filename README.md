@@ -10,10 +10,10 @@ Really Simple Text to Speech module for rust
 Add this to your `Cargo.toml` file:
 
 ```toml
-   tts_rust = "0.3.2"
+   tts_rust = "0.3.3"
 ```
 
-use `cargo update` to update to version `0.3.2`
+use `cargo update` to update to version `0.3.3`
 
 ### Example...
 

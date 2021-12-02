@@ -849,7 +849,7 @@ dependencies = [
 
 [[package]]
 name = "tts_rust"
-version = "0.3.2"
+version = "0.3.3"
 dependencies = [
  "minreq",
  "percent-encoding",

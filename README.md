@@ -13,10 +13,13 @@ Add this to your `Cargo.toml` file:
    tts_rust = "0.3.2"
 ```
 
+use `cargo update` to update to version `0.3.2`
+
 ### Example...
 
 ```rust
-use tts_rust::{ GTTSClient, languages::Languages }
+use tts_rust::{ GTTSClient, languages::Languages };
+
 fn main() {
     let mut narrator: GTTSClient = GTTSClient {
         volume: 1.0, 
@@ -28,7 +31,8 @@ fn main() {
 ### ...Or a more advanced one
 
 ```rust
-use tts_rust::{ GTTSClient, languages::Languages }
+use tts_rust::{ GTTSClient, languages::Languages };
+
 fn main() {
     let mut narrator: GTTSClient = GTTSClient {
         volume: 1.0,
@@ -47,4 +51,4 @@ fn main() {
 
 ### License
 
-- MIT
+#### MIT

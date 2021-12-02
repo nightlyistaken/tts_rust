@@ -17,8 +17,10 @@ use std::fs::File;
 use std::io::prelude::*;
 use std::io::BufReader;
 use std::path::Path;
+mod languages;
+use languages::Languages;
 
-pub struct GTTSClient<'a> {
+pub struct GTTSClient {
     /// The volume of the gTTS client
     ///
     /// recommended value is 1.0
@@ -26,17 +28,77 @@ pub struct GTTSClient<'a> {
     /// Use Language Codes according to ISO
     ///
     /// example: en(english), ja(japanese), hi(hindi)
-    pub language: &'a str,
+    pub language: Languages,
 }
 
 const ENCODE_FRAGMENT: &AsciiSet = &CONTROLS.add(b' ').add(b'"').add(b'<').add(b'>').add(b'`');
 
-impl<'a> GTTSClient<'a> {
+impl GTTSClient {
     fn save_to_file(&self, text: &str, filename: &str) -> bool {
         let len = text.len();
         let text = utf8_percent_encode(text, ENCODE_FRAGMENT).to_string();
-
-        if let Ok(rep) = get(format!("https://translate.google.fr/translate_tts?ie=UTF-8&q={}&tl={}&total=1&idx=0&textlen={}&tl={}&client=tw-ob", text, self.language, len, self.language)).send() {
+        let ln = match self.language {
+            Languages::Afrikaans => "af",
+            Languages::Albanian => "sq",
+            Languages::Arabic => "ar",
+            Languages::Armenian => "hy",
+            Languages::Bengali => "bn",
+            Languages::Bosnian => "bs",
+            Languages::Bulgarian => "bg",
+            Languages::Catalan => "ca",
+            Languages::Chinese => "zh-CN",
+            Languages::Croatian => "hr",
+            Languages::Czech => "cs",
+            Languages::Danish => "da",
+            Languages::Dutch => "nl",
+            Languages::English => "en",
+            Languages::Esperanto => "eo",
+            Languages::Estonian => "et",
+            Languages::Filipino => "tl",
+            Languages::Finnish => "fi",
+            Languages::French => "fr",
+            Languages::German => "de",
+            Languages::Greek => "el",
+            Languages::Gujarati => "gu",
+            Languages::Hindi => "hi",
+            Languages::Hungarian => "hu",
+            Languages::Icelandic => "is",
+            Languages::Indonesian => "id",
+            Languages::Italian => "it",
+            Languages::Japanese => "ja",
+            Languages::Javanese => "jw",
+            Languages::Kannada => "kn",
+            Languages::Khmer => "km",
+            Languages::Korean => "ko",
+            Languages::Latin => "la",
+            Languages::Latvian => "lv",
+            Languages::Macedonian => "mk",
+            Languages::Marathi => "mr",
+            Languages::Nepali => "ne",
+            Languages::Norwegian => "no",
+            Languages::Polish => "pl",
+            Languages::Portuguese => "pt",
+            Languages::Romanian => "ro",
+            Languages::Russian => "ru",
+            Languages::Serbian => "sr",
+            Languages::Sinhala => "si",
+            Languages::Slovak => "sk",
+            Languages::Spanish => "es",
+            Languages::Swahili => "sw",
+            Languages::Swedish => "sv",
+            Languages::Tamil => "ta",
+            Languages::Telugu => "te",
+            Languages::Thai => "th",
+            Languages::Turkish => "tr",
+            Languages::Ukrainian => "uk",
+            Languages::Urdu => "ur",
+            Languages::Vietnamese => "vi",
+            Languages::Welsh => "cy",
+            Languages::MyanmarAKABurmese => "my",
+            Languages::Malayalam => "ml",
+            Languages::Sundanese => "su",
+        };
+        if let Ok(rep) = get(format!("https://translate.google.fr/translate_tts?ie=UTF-8&q={}&tl={}&total=1&idx=0&textlen={}&tl={}&client=tw-ob", text, ln, len, ln)).send() {
         if let Ok(mut file) = File::create(filename) {
             let bytes = rep.as_bytes();
             if bytes.len() > 0 {
@@ -82,7 +144,7 @@ impl<'a> GTTSClient<'a> {
 fn check_function_1() {
     let mut narrator: GTTSClient = GTTSClient {
         volume: 1.0,
-        language: "en",
+        language: Languages::Afrikaans,
     };
     narrator.speak("Starting test?");
     let ms = std::time::Duration::from_millis(1000);
@@ -98,7 +160,7 @@ fn check_function_1() {
 fn check_function_2() {
     let tester: GTTSClient = GTTSClient {
         volume: 1.5,
-        language: "ja",
+        language: Languages::English,
     };
     tester.test();
     tester.display_and_speak("displaying and speaking boi")

@@ -10,16 +10,17 @@ Really Simple Text to Speech module for rust
 Add this to your `Cargo.toml` file:
 
 ```toml
-   tts_rust = "0.3.1"
+   tts_rust = "0.3.2"
 ```
 
 ### Example...
 
 ```rust
+use tts_rust::{ GTTSClient, Languages }
 fn main() {
     let mut narrator: GTTSClient = GTTSClient {
         volume: 1.0, 
-        language: "en", // en is the ISO code of english
+        language: tts_rust::Languages::English, // use the Languages enum
     };
     narrator.speak("Hello, World!");
 }

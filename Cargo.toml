@@ -1,14 +1,12 @@
 [package]
 name = "tts_rust"
-version = "0.3.1"
+version = "0.3.2"
 edition = "2018"
 description = "Simple & easy text-to-speech module for your needs."
 license = "MIT"
 readme = "README.md"
 repository = "https://github.com/dhairy-online/tts_rust"
 keywords = ["tts", "text_to_speech", "gTTS"]
-
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
 minreq = { version="2.0.3", features=["https"] }

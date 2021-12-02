@@ -1,9 +1,12 @@
 //! # Very Simple Module for gTTS
 //! Example:
 //! ```rust
+//! use tts_rust::languages::Languages;
+//! use tts_rust::GTTSClient;
+//! 
 //! let narrator = GTTSClient {
-//!      volume: 1.0,
-//!     language: "en",
+//!     volume: 1.0,
+//!     language: Languages::English,
 //! };
 //! narrator.speak("Hello!");
 //! ```
@@ -17,7 +20,8 @@ use std::fs::File;
 use std::io::prelude::*;
 use std::io::BufReader;
 use std::path::Path;
-mod languages;
+
+pub mod languages;
 use languages::Languages;
 
 pub struct GTTSClient {
@@ -25,9 +29,9 @@ pub struct GTTSClient {
     ///
     /// recommended value is 1.0
     pub volume: f32,
-    /// Use Language Codes according to ISO
+    /// Use Language Codes according to Languages (enum)
     ///
-    /// example: en(english), ja(japanese), hi(hindi)
+    /// example: Languages::English, Languages::Japanese
     pub language: Languages,
 }
 
@@ -126,11 +130,12 @@ impl GTTSClient {
             fs::remove_file("./audio.mp3").unwrap();
         }
     }
+    /// Speak and println! the input according to the volume and language
     pub fn display_and_speak(&self, input: &str) {
         self.speak(input);
         println!("{}", input);
     }
-    /// Fastest way to check if TTS works
+    /// Fastest way to check if gTTS works
     pub fn test(&self) {
         self.save_to_file("Hello!", "audio.mp3");
         self.play_mp3("audio.mp3");

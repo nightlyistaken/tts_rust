@@ -149,7 +149,7 @@ impl GTTSClient {
 fn check_function_1() {
     let mut narrator: GTTSClient = GTTSClient {
         volume: 1.0,
-        language: Languages::Afrikaans,
+        language: Languages::Telugu,
     };
     narrator.speak("Starting test?");
     let ms = std::time::Duration::from_millis(1000);

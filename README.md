@@ -16,11 +16,11 @@ Add this to your `Cargo.toml` file:
 ### Example...
 
 ```rust
-use tts_rust::{ GTTSClient, Languages }
+use tts_rust::{ GTTSClient, languages::Languages }
 fn main() {
     let mut narrator: GTTSClient = GTTSClient {
         volume: 1.0, 
-        language: tts_rust::Languages::English, // use the Languages enum
+        language: Languages::English, // use the Languages enum
     };
     narrator.speak("Hello, World!");
 }
@@ -28,14 +28,15 @@ fn main() {
 ### ...Or a more advanced one
 
 ```rust
+use tts_rust::{ GTTSClient, languages::Languages }
 fn main() {
     let mut narrator: GTTSClient = GTTSClient {
         volume: 1.0,
-        language: "en",
+        language: Languages::English,
     };
     narrator.speak("Starting test?");
     let ms = std::time::Duration::from_millis(1000);
-    for _x in 1..10 {
+    for _x in 1..9 {
         narrator.volume += 1.0;
         let to_speak: String = String::from("Loop ") + &narrator.volume.to_string();
         narrator.speak(&to_speak);

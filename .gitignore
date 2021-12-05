@@ -1,3 +1,2 @@
 target/
-workspace.code-workspace
-text_speech_mod.code-workspace
+cli/target/

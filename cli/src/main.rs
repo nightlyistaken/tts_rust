@@ -7,7 +7,7 @@ use quicli::prelude::*;
 struct GTTSCli {
     text: String,
 
-    #[structopt(short = "l", long = "lang", default_value = "en", possible_values = &Languages::variants())]
+    #[structopt(short = "l", long = "lang", default_value = "en")]
     language: Languages,
 }
 

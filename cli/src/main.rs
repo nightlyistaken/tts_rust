@@ -1,7 +1,6 @@
-use structopt::StructOpt;
-use tts_rust::{ GTTSClient, languages::Languages };
 use quicli::prelude::*;
-
+use structopt::StructOpt;
+use tts_rust::{languages::Languages, GTTSClient};
 
 #[derive(Debug, StructOpt)]
 struct GTTSCli {
@@ -11,13 +10,12 @@ struct GTTSCli {
     language: Languages,
 }
 
-
 fn main() -> CliResult {
     let args = GTTSCli::from_args();
     let client = GTTSClient {
         volume: 1.0,
         language: args.language,
     };
-    client.speak(&args.text);
+    client.speak(&args.text).unwrap();
     Ok(())
 }

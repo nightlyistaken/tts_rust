@@ -130,16 +130,17 @@ impl GTTSClient {
         sink.sleep_until_end();
     }
     /// Speak the input according to the volume and language
-    pub fn speak(&self, input: &str) {
+    pub fn speak(&self, input: &str) -> Result<(), String> {
         self.save_to_file(input, "audio.mp3").unwrap();
         self.play_mp3("audio.mp3");
         if Path::new("./audio.mp3").exists() {
             fs::remove_file("./audio.mp3").unwrap();
         }
+        Ok(())
     }
     /// Speak and println! the input according to the volume and language
     pub fn display_and_speak(&self, input: &str) {
-        self.speak(input);
+        self.speak(input).unwrap();
         println!("{}", input);
     }
     /// Fastest way to check if gTTS API works
@@ -154,12 +155,12 @@ fn check_function_1() {
         volume: 1.0,
         language: Languages::Telugu,
     };
-    narrator.speak("Starting test?");
+    narrator.speak("Starting test?").unwrap();
     let ms = std::time::Duration::from_millis(1000);
     for _x in 1..9 {
         narrator.volume += 1.0;
         let to_speak: String = String::from("Loop ") + &narrator.volume.to_string();
-        narrator.speak(&to_speak);
+        narrator.speak(&to_speak).unwrap();
         std::thread::sleep(ms);
     }
 }

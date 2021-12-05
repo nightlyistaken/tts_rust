@@ -3,7 +3,7 @@
 //! ```rust
 //! use tts_rust::languages::Languages;
 //! use tts_rust::GTTSClient;
-//! 
+//!
 //! let narrator = GTTSClient {
 //!     volume: 1.0,
 //!     language: Languages::English,
@@ -22,8 +22,11 @@ use std::io::BufReader;
 use std::path::Path;
 
 pub mod languages;
+
 use languages::Languages;
 
+
+#[derive(Debug)]
 pub struct GTTSClient {
     /// The volume of the gTTS client
     ///
@@ -38,9 +41,8 @@ pub struct GTTSClient {
 const ENCODE_FRAGMENT: &AsciiSet = &CONTROLS.add(b' ').add(b'"').add(b'<').add(b'>').add(b'`');
 
 impl GTTSClient {
-    fn save_to_file(&self, text: &str, filename: &str) -> bool {
-        let len = text.len();
-        let text = utf8_percent_encode(text, ENCODE_FRAGMENT).to_string();
+    /// get your current language iso code
+    pub fn get_language(&self) -> &str {
         let ln = match self.language {
             Languages::Afrikaans => "af",
             Languages::Albanian => "sq",
@@ -102,17 +104,22 @@ impl GTTSClient {
             Languages::Malayalam => "ml",
             Languages::Sundanese => "su",
         };
-        if let Ok(rep) = get(format!("https://translate.google.fr/translate_tts?ie=UTF-8&q={}&tl={}&total=1&idx=0&textlen={}&tl={}&client=tw-ob", text, ln, len, ln)).send() {
-        if let Ok(mut file) = File::create(filename) {
-            let bytes = rep.as_bytes();
-            if bytes.len() > 0 {
-                if file.write_all(bytes).is_ok() {
-                    return true;
-                }
+        return ln;
+    }
+    fn save_to_file(&self, text: &str, filename: &str) -> Result<(), String> {
+        let len = text.len();
+        let language = self.get_language();
+        let text = utf8_percent_encode(text, ENCODE_FRAGMENT).to_string();
+        let rep = get(format!("https://translate.google.com/translate_tts?ie=UTF-8&q={}&tl={}&total=1&idx=0&textlen={}&tl={}&client=tw-ob", text, language, len, language)).send().unwrap();
+        let mut file = File::create(filename).unwrap();
+        let bytes = rep.as_bytes();
+        if bytes.len() > 0 {
+            if file.write_all(bytes).is_ok() {
+                return Ok(());
             }
         }
-    }
-        false
+
+        Err(format!("Something went wrong"))
     }
     fn play_mp3(&self, mp3: &str) {
         let (_stream, handle) = rodio::OutputStream::try_default().unwrap();
@@ -124,7 +131,7 @@ impl GTTSClient {
     }
     /// Speak the input according to the volume and language
     pub fn speak(&self, input: &str) {
-        self.save_to_file(input, "audio.mp3");
+        self.save_to_file(input, "audio.mp3").unwrap();
         self.play_mp3("audio.mp3");
         if Path::new("./audio.mp3").exists() {
             fs::remove_file("./audio.mp3").unwrap();
@@ -135,13 +142,9 @@ impl GTTSClient {
         self.speak(input);
         println!("{}", input);
     }
-    /// Fastest way to check if gTTS works
+    /// Fastest way to check if gTTS API works
     pub fn test(&self) {
-        self.save_to_file("Hello!", "audio.mp3");
-        self.play_mp3("audio.mp3");
-        if Path::new("./audio.mp3").exists() {
-            fs::remove_file("./audio.mp3").unwrap();
-        }
+        self.display_and_speak("Hello!");
     }
 }
 

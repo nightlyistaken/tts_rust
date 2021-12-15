@@ -13,6 +13,9 @@ Add this to your `Cargo.toml` file:
    tts_rust = "0.3.3"
 ```
 
+Uses `cargo fmt` as formatter
+
+
 use `cargo update` to update to version `0.3.3`
 
 ### Example...

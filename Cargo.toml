@@ -12,3 +12,10 @@ keywords = ["tts", "text_to_speech", "gTTS"]
 minreq = { version="2.0.3", features=["https"] }
 percent-encoding = "2.1.0"
 rodio = "0.14.0"
+structopt = "*"
+quicli = "*"
+
+# bin cli
+[[bin]]
+name = "tts"
+path = "cli/main.rs"

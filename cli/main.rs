@@ -16,7 +16,40 @@ fn main() -> CliResult {
   let client = GTTSClient {
     volume: 1.0,
     language: args.language,
+    tld: "com",
   };
   client.speak(&args.text).unwrap();
   Ok(())
+}
+// test cli
+#[cfg(test)]
+mod cli_tests {
+  use super::*;
+
+  #[test]
+  fn test_cli_default() {
+    let args = GTTSCli::from_iter(&["tts_rust", "--lang", "en", "Hello!"]);
+  }
+  #[test]
+  fn test_cli_en() {
+    let args = GTTSCli::from_iter(&["tts_rust", "--lang", "en", "Hello!"]);
+    let client = GTTSClient {
+      volume: 1.0,
+      language: Languages::English,
+      tld: "com",
+    };
+    let _result = client.speak(&args.text).unwrap();
+  }
+  #[test]
+  fn test_cli_ja() {
+    let args = GTTSCli::from_iter(&["tts_rust", "--lang", "ja", "Hello!"]);
+    let client = GTTSClient {
+      volume: 1.0,
+      language: Languages::Japanese,
+      tld: "com",
+    };
+    let _result = client.speak(&args.text).unwrap();
+  }
+
+
 }

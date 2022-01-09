@@ -8,24 +8,54 @@ use std::path::Path;
 use crate::languages::Languages;
 use crate::url::core::Core;
 
+
 #[derive(Debug)]
 pub struct GTTSClient {
-  /// The volume of the gTTS client
+  /// The volume of the audio. Must be between 0.0 and 1.0. Default is 1.0.
   ///
   /// recommended value is 1.0
   pub volume: f32,
-  /// Use Language Codes according to Languages (enum)
+  /// The language of the gTTS client (ISO code)
   ///
   /// example: Languages::English, Languages::Japanese
   pub language: Languages,
+  /// top-level domain of the gTTS client
+  ///
+  /// example: "com"
+  pub tld: &'static str,
 }
-
+pub enum Speed {
+  Normal,
+  Slow,
+}
 impl GTTSClient {
+  /// Creates a new gTTS client default values.
+  pub fn default() -> Self {
+    GTTSClient {
+      volume: 1.0,
+      language: Languages::English,
+      tld: "com",
+    }
+  }
+  /// Creates a new gTTS client with the given volume and language.
+  pub fn new(volume: f32, language: Languages, tld: &'static str) -> Self {
+    GTTSClient {
+      volume,
+      language,
+      tld,
+    }
+  }
   pub fn save_to_file(&self, text: &str, filename: &str) -> Result<(), String> {
     let len = text.len();
+    if len > GOOGLE_TTS_MAX_CHARS {
+      return Err(format!(
+        "The text is too long. Max length is {}",
+        GOOGLE_TTS_MAX_CHARS
+      ));
+    }
     let language = Languages::as_code(self.language.clone());
     let text = Core::fragmenter(text)?;
-    let rep = get(format!("https://translate.google.com/translate_tts?ie=UTF-8&q={}&tl={}&total=1&idx=0&textlen={}&tl={}&client=tw-ob", text.encoded, language, len, language)).send().unwrap();
+    let rep = get(format!("https://translate.google.{}/translate_tts?ie=UTF-8&q={}&tl={}&total=1&idx=0&textlen={}&tl={}&client=tw-ob", self.tld, text.encoded, language, len, language)).send().unwrap();
     let mut file = File::create(filename).unwrap();
     let bytes = rep.as_bytes();
     if !bytes.is_empty() && file.write_all(bytes).is_ok() {
@@ -61,43 +91,13 @@ impl GTTSClient {
     self.display_and_speak("Hello!");
   }
 }
-
 #[cfg(test)]
 mod tests {
   use super::*;
 
   #[test]
   fn test_1() {
-    let narrator = GTTSClient {
-      volume: 1.0,
-      language: Languages::English,
-    };
+    let narrator = GTTSClient::default();
     narrator.test();
-  }
-  #[test]
-  fn test_2() -> Result<(), String> {
-    let mut narrator: GTTSClient = GTTSClient {
-      volume: 1.0,
-      language: Languages::Telugu,
-    };
-    narrator.speak("Starting test?")?;
-    let ms = std::time::Duration::from_millis(1000);
-    for _x in 1..9 {
-      narrator.volume += 1.0;
-      let to_speak: String =
-        String::from("Loop ") + &narrator.volume.to_string();
-      narrator.speak(&to_speak)?;
-      std::thread::sleep(ms);
-    }
-    Ok(())
-  }
-  #[test]
-  fn test_3() {
-    let tester: GTTSClient = GTTSClient {
-      volume: 1.5,
-      language: Languages::English,
-    };
-    tester.test();
-    tester.display_and_speak("displaying and speaking boi")
   }
 }

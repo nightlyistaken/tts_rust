@@ -6,16 +6,22 @@ pub struct Core;
 
 const FRAGMENT: &AsciiSet =
   &CONTROLS.add(b' ').add(b'"').add(b'<').add(b'>').add(b'`');
+
 pub struct EncodedFragment {
   pub encoded: String,
+  pub decoded: String,
 }
+
 impl Core {
-  // create a tokenizer from python gTTS API translate.google.com tokenizer
   pub fn fragmenter(text: &str) -> Result<EncodedFragment, String> {
-    let text = utf8_percent_encode(text, FRAGMENT).to_string();
+    let raw_text = text;
+    let text = utf8_percent_encode(raw_text, FRAGMENT).to_string();
     if text.is_empty() {
       return Err("Empty text".to_string());
     }
-    Ok(EncodedFragment { encoded: text })
+    Ok(EncodedFragment {
+      encoded: text,
+      decoded: raw_text.to_string(),
+    })
   }
 }

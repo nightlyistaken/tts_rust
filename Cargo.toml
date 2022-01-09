@@ -1,7 +1,7 @@
 [package]
 name = "tts_rust"
 version = "0.3.3"
-edition = "2018"
+edition = "2021"
 description = "Simple & easy text-to-speech module for your needs."
 license = "MIT"
 readme = "README.md"

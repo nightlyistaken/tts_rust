@@ -10,11 +10,10 @@ Really Simple Text to Speech module for rust
 Add this to your `Cargo.toml` file:
 
 ```toml
-   tts_rust = "0.3.3"
+tts_rust = "0.3.3"
 ```
 
 Uses `cargo fmt` as formatter
-
 
 use `cargo update` to update to version `0.3.3`
 
@@ -31,6 +30,7 @@ fn main() {
     narrator.speak("Hello, World!");
 }
 ```
+
 ### ...Or a more advanced one
 
 ```rust
@@ -41,7 +41,7 @@ fn main() {
         volume: 1.0,
         language: Languages::English,
     };
-    narrator.speak("Starting test?");
+    narrator.speak("Starting test?").unwarp();
     let ms = std::time::Duration::from_millis(1000);
     for _x in 1..9 {
         narrator.volume += 1.0;

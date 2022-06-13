@@ -41,7 +41,7 @@ fn main() {
         volume: 1.0,
         language: Languages::English,
     };
-    narrator.speak("Starting test?").unwarp();
+    narrator.speak("Starting test?");
     let ms = std::time::Duration::from_millis(1000);
     for _x in 1..9 {
         narrator.volume += 1.0;

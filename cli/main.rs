@@ -18,7 +18,9 @@ fn main() -> CliResult {
     language: args.language,
     tld: "com",
   };
-  client.speak(&args.text).unwrap();
+  if let Err(msg) = client.speak(&args.text) {
+    println!("An error occurred: {}", msg);
+  }
   Ok(())
 }
 // test cli
@@ -50,6 +52,4 @@ mod cli_tests {
     };
     let _result = client.speak(&args.text).unwrap();
   }
-
-
 }

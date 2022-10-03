@@ -5,9 +5,9 @@ use std::io::prelude::*;
 use std::io::BufReader;
 use std::path::Path;
 
+use crate::constants::GOOGLE_TTS_MAX_CHARS;
 use crate::languages::Languages;
 use crate::url::core::Core;
-
 
 #[derive(Debug)]
 pub struct GTTSClient {
@@ -55,7 +55,9 @@ impl GTTSClient {
     }
     let language = Languages::as_code(self.language.clone());
     let text = Core::fragmenter(text)?;
-    let rep = get(format!("https://translate.google.{}/translate_tts?ie=UTF-8&q={}&tl={}&total=1&idx=0&textlen={}&tl={}&client=tw-ob", self.tld, text.encoded, language, len, language)).send().unwrap();
+    let rep = get(format!("https://translate.google.{}/translate_tts?ie=UTF-8&q={}&tl={}&total=1&idx=0&textlen={}&tl={}&client=tw-ob", self.tld, text.encoded, language, len, language))
+      .send()
+      .map_err(|e| format!("{}", e))?;
     let mut file = File::create(filename).unwrap();
     let bytes = rep.as_bytes();
     if !bytes.is_empty() && file.write_all(bytes).is_ok() {

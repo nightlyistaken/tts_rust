@@ -10,7 +10,7 @@ Really Simple Text to Speech module for rust
 Add this to your `Cargo.toml` file:
 
 ```toml
-tts_rust = "0.3.3"
+tts_rust = "0.3.4"
 ```
 
 Uses `cargo fmt` as formatter

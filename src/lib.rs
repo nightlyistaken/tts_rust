@@ -1,6 +1,7 @@
 //! # Very Simple Module for gTTS
 //! Example:
 //!
+mod constants;
 /// ```
 /// use tts_rust::languages::Languages;
 /// use tts_rust::tts::GTTSClient;

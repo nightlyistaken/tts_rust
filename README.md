@@ -5,17 +5,7 @@ Really Simple Text to Speech module for rust
 - [crates.io](https://crates.io/crates/tts_rust)
 - [docs.rs](https://docs.rs/tts_rust/)
 
-#### Cargo.toml
-
-Add this to your `Cargo.toml` file:
-
-```toml
-tts_rust = "0.3.4"
-```
-
 Uses `cargo fmt` as formatter
-
-use `cargo update` to update to version `0.3.3`
 
 ### Example...
 

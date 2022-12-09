@@ -1,6 +1,6 @@
 [package]
 name = "tts_rust"
-version = "0.3.4"
+version = "0.3.5"
 edition = "2021"
 description = "Simple & easy text-to-speech module for your needs."
 license = "MIT"
@@ -12,8 +12,8 @@ keywords = ["tts", "text_to_speech", "gTTS"]
 minreq = { version="2.0.3", features=["https"] }
 percent-encoding = "2.1.0"
 rodio = "0.14.0"
-structopt = "*"
-quicli = "*"
+structopt = "0.3"
+quicli = "0.4.0"
 
 # bin cli
 [[bin]]

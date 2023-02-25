@@ -10,12 +10,13 @@ Uses `cargo fmt` as formatter
 ### Example...
 
 ```rust
-use tts_rust::{ GTTSClient, languages::Languages };
+use tts_rust::{ tts::GTTSClient, languages::Languages };
 
 fn main() {
     let mut narrator: GTTSClient = GTTSClient {
         volume: 1.0, 
         language: Languages::English, // use the Languages enum
+        tld: "com",
     };
     narrator.speak("Hello, World!");
 }
@@ -24,12 +25,13 @@ fn main() {
 ### ...Or a more advanced one
 
 ```rust
-use tts_rust::{ GTTSClient, languages::Languages };
+use tts_rust::{ tts::GTTSClient, languages::Languages };
 
 fn main() {
     let mut narrator: GTTSClient = GTTSClient {
         volume: 1.0,
         language: Languages::English,
+        tld: "com",
     };
     narrator.speak("Starting test?");
     let ms = std::time::Duration::from_millis(1000);

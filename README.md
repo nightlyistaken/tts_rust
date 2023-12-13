@@ -18,7 +18,7 @@ fn main() {
         language: Languages::English, // use the Languages enum
         tld: "com",
     };
-    narrator.speak("Hello, World!");
+    narrator.speak("Hello, World!").unwrap();
 }
 ```
 
@@ -33,12 +33,12 @@ fn main() {
         language: Languages::English,
         tld: "com",
     };
-    narrator.speak("Starting test?");
+    narrator.speak("Starting test?").unwrap();
     let ms = std::time::Duration::from_millis(1000);
     for _x in 1..9 {
         narrator.volume += 1.0;
         let to_speak: String = String::from("Loop ") + &narrator.volume.to_string();
-        narrator.speak(&to_speak);
+        narrator.speak(&to_speak).unwrap();
         std::thread::sleep(ms);
     }
 }
